@@ -42,7 +42,7 @@ export default function Login() {
                     </div>
 
                     <div className="pt-8 w-full text-center text-2xl flex justify-items-start">
-                        <button className="px-8 py-2 bg-blue-700 text-white hover:bg-blue-300">Entrar</button>
+                        <button className="px-8 py-2 bg-blue-700 text-white hover:bg-blue-300">Registrarse</button>
                     </div>
                 </div>
             </div>
@@ -52,7 +52,7 @@ export default function Login() {
         <div className="bg-white flex flex-col lg:flex-row lg:pt-20">
 
             <div className="w-full text-center text-2xl flex justify-center">
-                <button className="px-8 py-2 bg-blue-700 text-white hover:bg-blue-300">No tengo una cuenta</button>
+                <button className="px-8 py-2 bg-blue-700 text-white hover:bg-blue-300">Ya tengo una cuenta</button>
             </div>
         </div>
     </div>
