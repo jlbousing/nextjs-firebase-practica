@@ -2,6 +2,8 @@ import React, {useState} from 'react'
 import { useAuth } from '../AuthUserProvider';
 import { useRouter } from 'next/router';
 import Alert from '../components/Alert';
+import GoogleAuthButton from '../components/GoogleAuthButton';
+import Link from 'next/link';
 
 export default function Login() {
 
@@ -10,7 +12,7 @@ export default function Login() {
   const [password, setPassword] = useState(null);
   const [error, setError] = useState(null);
 
-  const { signInWithEmailAndPassword } = useAuth();
+  const { signInWithEmailAndPassword, signWithGoogle } = useAuth();
 
   const router = useRouter();
 
@@ -76,37 +78,49 @@ export default function Login() {
             <div className="w-full lg:w-1/2">
                 <div className="flex flex-col pt-6 lg:px-20">
                 
-                <form 
-                    onSubmit={onSubmit}
-                >
-                    {error && <Alert 
-                                title={"Error"} 
-                                message={error}
-                                closeError={closeAlert} />}
+                    <form 
+                        onSubmit={onSubmit}
+                    >
+                        {error && <Alert 
+                                    title={"Error"} 
+                                    message={error}
+                                    closeError={closeAlert} />}
 
-                    <div className="w-full text-blue-700">
-                        <div className="px-2">
-                            <label>Email:</label>
+                        <div className="w-full text-blue-700">
+                            <div className="px-2">
+                                <label>Email:</label>
+                            </div>
+                            <input className="border-solid border-2 border-blue-700 rounded-md mx-3"
+                                onChange={(event) => setEmail(event.target.value)}></input>
                         </div>
-                        <input className="border-solid border-2 border-blue-700 rounded-md mx-3"
-                        onChange={(event) => setEmail(event.target.value)}></input>
-                    </div>
 
-                    <div className="pt-2 w-full text-blue-700">
-                        <div className="px-2">
-                            <label>Password:</label>
+                        <div className="pt-2 w-full text-blue-700">
+                            <div className="px-2">
+                                <label>Password:</label>
+                            </div>
+                            <input type="password" className="border-solid border-2 border-blue-700 rounded-md mx-3"
+                            onChange={(event) => setPassword(event.target.value)}></input>
                         </div>
-                        <input type="password" className="border-solid border-2 border-blue-700 rounded-md mx-3"
-                        onChange={(event) => setPassword(event.target.value)}></input>
-                    </div>
 
-                    <div className="pt-8 w-full text-center text-2xl flex justify-items-start">
-                        <input 
-                            type="submit" 
-                            className="px-8 py-2 bg-blue-700 text-white hover:bg-blue-300"
-                            value="Acceder"/>
-                    </div>
+                        <div className="pt-8 w-full text-center text-2xl flex justify-items-start">
+                            <input 
+                                type="submit" 
+                                className="px-8 py-2 bg-blue-700 text-white hover:bg-blue-300"
+                                value="Acceder"/>
+                        </div>
                     </form>
+                </div>
+
+                <div className="flex flex-col pt-6 lg:px-20">
+                     <div 
+                     className='w-full text-center text-blue-700 text-lg justify-center lg:w-1/5'>
+                        <h1>INGRESA CON:</h1>
+                     </div>
+                     <div className='flex flex-row justify-center'>
+                        <GoogleAuthButton
+                            action={signWithGoogle}
+                        />
+                     </div>      
                 </div>
             </div>
 
@@ -115,7 +129,11 @@ export default function Login() {
         <div className="bg-white flex flex-col lg:flex-row lg:pt-20">
 
             <div className="w-full text-center text-2xl flex justify-center">
-                <button className="px-8 py-2 bg-blue-700 text-white hover:bg-blue-300">No tengo una cuenta</button>
+                <Link href={"/register"}>
+                    <a>
+                    <button className="px-8 py-2 bg-blue-700 text-white hover:bg-blue-300">No tengo una cuenta</button>
+                    </a>
+                </Link>
             </div>
         </div>
     </div>

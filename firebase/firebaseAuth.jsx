@@ -35,6 +35,14 @@ export const useFirebaseAuth = () => {
 
     const createUserWithEmailAndPassword = (email, password) =>
       firebase.auth().createUserWithEmailAndPassword(email, password);
+    
+    const signWithGoogle = () => {
+      let provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+          console.log("Usuario logeado con google auth ",result);
+        })
+    }
 
     const signOut = () =>
       firebase.auth().signOut().then(clear);
@@ -50,6 +58,7 @@ export const useFirebaseAuth = () => {
       loading,
       signInWithEmailAndPassword,
       createUserWithEmailAndPassword,
-      signOut
+      signOut,
+      signWithGoogle
     };
 }
