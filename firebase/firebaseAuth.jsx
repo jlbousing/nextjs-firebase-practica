@@ -24,6 +24,21 @@ export const useFirebaseAuth = () => {
         setLoading(false);
     };
 
+    const clear = () => {
+      setAuthUser(null);
+      setLoading(true);
+    };
+
+
+    const signInWithEmailAndPassword = (email, password) =>
+      firebase.auth().signInWithEmailAndPassword(email, password);
+
+    const createUserWithEmailAndPassword = (email, password) =>
+      firebase.auth().createUserWithEmailAndPassword(email, password);
+
+    const signOut = () =>
+      firebase.auth().signOut().then(clear);
+
     useEffect(() => {
         console.log("prueba firebase ",firebase);
         const unsubscribe = firebase.auth().onAuthStateChanged(authStateChanged);
@@ -31,7 +46,10 @@ export const useFirebaseAuth = () => {
       }, []);
     
     return {
-     authUser,
-     loading
+      authUser,
+      loading,
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword,
+      signOut
     };
 }

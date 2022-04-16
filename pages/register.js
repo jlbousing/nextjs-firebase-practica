@@ -1,16 +1,76 @@
 import React, {useState} from 'react'
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { useRouter } from 'next/router'
+import { useAuth } from '../AuthUserProvider';
+import Alert from '../components/Alert';
+
 
 export default function Register() {
 
     //SE DEFINE name, email Y password DENTRO DEL ESTADO DEL COMPONENTE
+
     const [name, setName] = useState(null);
     const [email, setEmail] = useState(null);
     const [password, setPassword] = useState(null);
+    const [error, setError] = useState(null);
 
-    const onSubmit = () => {
+    const { createUserWithEmailAndPassword, signOut } = useAuth();
+
+    
+    const router = useRouter();
+
+    const validateData = (name,email,password) => {
+
+        if(!name)
+            return false;
+
+        if(!email)
+            return false;
         
+        if(!password)
+            return false;
+            
+        return true;
+    }
+
+    const closeAlert = () => {
+        setError(null);
+    }
+
+    const onSubmit = (event) => {
+        
+        event.preventDefault();
+
+        console.log("probando registro ");
+
+        if(validateData(name,email,password)){
+            
+            createUserWithEmailAndPassword(email,password)
+                .then((result) => {
+                    console.log("Se ha registrado un usuario en firebase correctamente ",result);
+
+                    //SE ACTUALIZA EL NOMBRE DEL USUARIO
+                    result.user.updateProfile({
+                        displayName: name
+                    }).then((result) => {
+                        console.log("se ha actualizado la informacion correctamente ",result);
+                    }).catch((err) => console.log(err));
+
+                    //SE ENVIA UN EMAIL DE VERIFICACION
+                    result.user.sendEmailVerification();
+
+                    //SE DESLOGEA AL USUARIO PARA QUE ESTE VERIFIQUE EN SU CORREO EL ENLACE ENVIADO
+                    signOut()
+                        .then(() => router.push("/login"));
+                })
+                .catch((err) => {
+                    console.log(err);
+                    setError(err.message);
+                });
+        }else{
+            setError("Datos de formulario incorrectos, pruebe otra vez");
+        }
     };
+
   return (
     <div>
         <div className="bg-white flex flex-col lg:flex-row p-20">
@@ -35,8 +95,15 @@ export default function Register() {
             </div>
 
             <div className="w-full lg:w-1/2">
-                <div className="flex flex-col pt-6 lg:px-20">
+            <div className="flex flex-col pt-6 lg:px-20">
 
+                <form 
+                    onSubmit={onSubmit}
+                >
+                    {error && <Alert 
+                                title={"Error"} 
+                                message={error}
+                                closeError={closeAlert} />}
                     <div className="pt-2 w-full text-blue-700">
                         <div className="px-2">
                             <label>Nombre:</label>
@@ -62,10 +129,14 @@ export default function Register() {
                     </div>
 
                     <div className="pt-8 w-full text-center text-2xl flex justify-items-start">
-                        <button className="px-8 py-2 bg-blue-700 text-white hover:bg-blue-300"
-                        onClick={() => onSubmit()}>Registrarse</button>
+                        <input 
+                            type="submit" 
+                            className="px-8 py-2 bg-blue-700 text-white hover:bg-blue-300"
+                            value="Registrarse"/>
                     </div>
-                </div>
+                </form>
+            </div>
+
             </div>
 
         </div>
