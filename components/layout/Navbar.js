@@ -21,16 +21,27 @@ export default function Navbar() {
 						</div>
 					
 						<div className="hidden md:flex items-center space-x-1">
-							<a href="" className="py-4 px-2 text-green-500 border-b-4 border-green-500 font-semibold ">Home</a>
-							<a href="" className="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Services</a>
-							<a href="" className="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">About</a>
-							<a href="" className="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Contact Us</a>
+							{authUser &&
+								<Link href="/">
+									<a className="py-4 px-2 text-green-500 border-b-4 border-green-500 font-semibold ">Home</a>
+								</Link>}
 						</div>
 					</div>
 					
 					<div className="hidden md:flex items-center space-x-3 ">
-						<a href="" className="py-2 px-2 font-medium text-gray-500 rounded hover:bg-green-500 hover:text-white transition duration-300">Log In</a>
-						<a href="" className="py-2 px-2 font-medium text-white bg-green-500 rounded hover:bg-green-400 transition duration-300">Sign Up</a>
+					{!authUser && 
+								<Link href="/login">
+									<a  className="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Login</a>
+								</Link>}
+							
+							{!authUser && 
+								<Link href="/register">
+									<a  className="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Register</a>
+								</Link>}
+							{authUser && 
+								<Link href="/logout">
+									<a  className="py-4 px-2 text-gray-500 font-semibold hover:text-green-500 transition duration-300">Logout</a>
+								</Link>}
 					</div>
 					
 					<div className="md:hidden flex items-center">
