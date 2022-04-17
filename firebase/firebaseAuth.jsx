@@ -35,7 +35,7 @@ export const useFirebaseAuth = () => {
       firebase.auth().signInWithEmailAndPassword(email, password);
 
     const createUserWithEmailAndPassword = (email, password) =>
-      firebase.auth().createUserWithEmailAndPassword(email, password);
+      firebase.auth().createUserWithEmailAndPassword(email, password);    
 
     const activePopUptoSign = () => {
       return firebase;
