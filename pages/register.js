@@ -18,8 +18,7 @@ export default function Register() {
     const { 
         createUserWithEmailAndPassword, 
         signOut,
-        signWithGoogle,
-        signWithFacebook
+        activePopUptoSign
      } = useAuth();
 
     
@@ -41,6 +40,36 @@ export default function Register() {
 
     const closeAlert = () => {
         setError(null);
+    }
+
+
+    const googleAuth = () => {
+        let firebase = activePopUptoSign();
+        let provider = new firebase.auth.GoogleAuthProvider();
+  
+        return firebase.auth().signInWithPopup(provider)
+          .then((result) => {
+            console.log("Usuario logeado con google auth ",result);
+  
+            result.user.updateProfile({
+              photoURL: result.user.photoURL
+            });
+  
+            router.push("/");
+  
+          })
+    }
+  
+    const facebookAuth = () => {
+  
+      let firebase = activePopUptoSign()
+  
+      let provider = new firebase.auth.FacebookAuthProvider();
+        firebase.auth().signInWithPopup(provider)
+          .then((result) => {
+              console.log("Usuario logeado con facebook auth ",result);
+              router.push("/");
+        })
     }
 
 
@@ -152,10 +181,10 @@ export default function Register() {
                      </div>
                      <div className='flex flex-row justify-center'>
                         <GoogleAuthButton
-                            action={signWithGoogle}
+                            action={googleAuth}
                         />
                         <FacebookAuthButton
-                            action={signWithFacebook}
+                            action={facebookAuth}
                          />
                      </div>      
                 </div>

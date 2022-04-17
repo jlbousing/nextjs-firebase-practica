@@ -2,8 +2,10 @@ import React, {useState} from 'react'
 import { useAuth } from '../AuthUserProvider';
 import { useRouter } from 'next/router';
 import Alert from '../components/Alert';
-import GoogleAuthButton from '../components/GoogleAuthButton';
 import Link from 'next/link';
+import GoogleAuthButton from '../components/GoogleAuthButton';
+import FacebookAuthButton from '../components/FacebookAuthButton';
+
 
 export default function Login() {
 
@@ -12,7 +14,10 @@ export default function Login() {
   const [password, setPassword] = useState(null);
   const [error, setError] = useState(null);
 
-  const { signInWithEmailAndPassword, signWithGoogle } = useAuth();
+  const { 
+    signInWithEmailAndPassword, 
+    activePopUptoSign
+   } = useAuth();
 
   const router = useRouter();
 
@@ -29,7 +34,36 @@ export default function Login() {
 
   const closeAlert = () => {
     setError(null);
-}
+  }
+
+  const googleAuth = () => {
+      let firebase = activePopUptoSign();
+      let provider = new firebase.auth.GoogleAuthProvider();
+
+      return firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+          console.log("Usuario logeado con google auth ",result);
+
+          result.user.updateProfile({
+            photoURL: result.user.photoURL
+          });
+
+          router.push("/");
+
+        })
+  }
+
+  const facebookAuth = () => {
+
+    let firebase = activePopUptoSign()
+
+    let provider = new firebase.auth.FacebookAuthProvider();
+      firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+            console.log("Usuario logeado con facebook auth ",result);
+            router.push("/");
+      })
+  }
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -118,8 +152,11 @@ export default function Login() {
                      </div>
                      <div className='flex flex-row justify-center'>
                         <GoogleAuthButton
-                            action={signWithGoogle}
+                            action={googleAuth}
                         />
+                        <FacebookAuthButton
+                            action={facebookAuth}
+                         />
                      </div>      
                 </div>
             </div>

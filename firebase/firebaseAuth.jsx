@@ -3,7 +3,8 @@ import firebase from './firebaseConfig';
 
 const formatAuthUser = (user) => ({
     uid: user.uid,
-    email: user.email
+    email: user.email,
+    photoURL: user.photoURL
 });
 
 export const useFirebaseAuth = () => {
@@ -35,28 +36,15 @@ export const useFirebaseAuth = () => {
 
     const createUserWithEmailAndPassword = (email, password) =>
       firebase.auth().createUserWithEmailAndPassword(email, password);
+
+    const activePopUptoSign = () => {
+      return firebase;
+    }
     
-    const signWithGoogle = () => {
-      let provider = new firebase.auth.GoogleAuthProvider();
-      firebase.auth().signInWithPopup(provider)
-        .then((result) => {
-          console.log("Usuario logeado con google auth ",result);
-        })
-    }
-
-    const signWithFacebook = () => {
-      let provider = new firebase.auth.FacebookAuthProvider();
-      firebase.auth().signInWithPopup(provider)
-        .then((result) => {
-            console.log("Usuario logeado con facebook auth ",result);
-      })
-    }
-
     const signOut = () =>
       firebase.auth().signOut().then(clear);
 
     useEffect(() => {
-        console.log("prueba firebase ",firebase);
         const unsubscribe = firebase.auth().onAuthStateChanged(authStateChanged);
         return () => unsubscribe();
       }, []);
@@ -66,8 +54,7 @@ export const useFirebaseAuth = () => {
       loading,
       signInWithEmailAndPassword,
       createUserWithEmailAndPassword,
-      signOut,
-      signWithGoogle,
-      signWithFacebook
+      activePopUptoSign,
+      signOut
     };
 }
