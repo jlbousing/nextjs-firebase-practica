@@ -4,6 +4,7 @@ import { useAuth } from '../AuthUserProvider';
 import Alert from '../components/Alert';
 import Link from 'next/link';
 import GoogleAuthButton from '../components/GoogleAuthButton';
+import FacebookAuthButton from '../components/FacebookAuthButton';
 
 export default function Register() {
 
@@ -17,7 +18,8 @@ export default function Register() {
     const { 
         createUserWithEmailAndPassword, 
         signOut,
-        signWithGoogle
+        signWithGoogle,
+        signWithFacebook
      } = useAuth();
 
     
@@ -152,6 +154,9 @@ export default function Register() {
                         <GoogleAuthButton
                             action={signWithGoogle}
                         />
+                        <FacebookAuthButton
+                            action={signWithFacebook}
+                         />
                      </div>      
                 </div>
 

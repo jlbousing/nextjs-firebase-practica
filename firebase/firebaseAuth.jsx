@@ -44,6 +44,14 @@ export const useFirebaseAuth = () => {
         })
     }
 
+    const signWithFacebook = () => {
+      let provider = new firebase.auth.FacebookAuthProvider();
+      firebase.auth().signInWithPopup(provider)
+        .then((result) => {
+            console.log("Usuario logeado con facebook auth ",result);
+      })
+    }
+
     const signOut = () =>
       firebase.auth().signOut().then(clear);
 
@@ -59,6 +67,7 @@ export const useFirebaseAuth = () => {
       signInWithEmailAndPassword,
       createUserWithEmailAndPassword,
       signOut,
-      signWithGoogle
+      signWithGoogle,
+      signWithFacebook
     };
 }
