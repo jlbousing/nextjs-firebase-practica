@@ -3,8 +3,13 @@ import firebase from './firebaseConfig';
 class DatabaseController {
 
     constructor(){
+
         this.db = firebase.firestore();
-        const settings = { timestampsInSnapShots: true};
+        
+    }
+
+    initSettings(){
+        const settings = { timestampsInSnapShots: true };
         this.db.settings(settings);
     }
 
@@ -22,6 +27,11 @@ class DatabaseController {
         }).then((refDoc) => {
             console.log(`id del post ${refDoc.id}`);
         }).catch((error) => console.log("error al crear el posts"));
+    }
+
+    consultarTodosPosts(){
+
+       return this.db.collection("posts");
     }
 }
 

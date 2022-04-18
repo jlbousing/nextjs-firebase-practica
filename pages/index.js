@@ -34,7 +34,9 @@ export default function Home() {
         <div className="flex flex-col justify-center items-center bg-blue-500 p-20">
 
             <div className="w-full font-bold bg-green-500 text-white text-center p-5 my-10 rounded lg:w-1/5 lg:text-xl">
-                Todos los Posts
+                <Link href="/posts">
+                    <a>Todos los Posts</a>
+                </Link>
             </div>
 
             <div className="w-full font-bold bg-green-500 text-white text-center p-5 my-10 rounded lg:w-1/5 lg:text-xl">

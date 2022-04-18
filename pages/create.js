@@ -149,7 +149,7 @@ export default function create() {
                                 <div className="px-2">
                                     <label>Imagen:</label>
                                 </div>
-                                <input type="file" className="border-solid border-2 border-blue-700 rounded-md mx-3"
+                                <input type="file" className="w-full border-solid border-2 border-blue-700 rounded-md mx-3"
                                     onChange={(event) => setImagen(event.target.value)}></input>
                             </div>
     
