@@ -33,6 +33,30 @@ class DatabaseController {
 
        return this.db.collection("posts");
     }
+
+    subirImagenPost(file, uid){
+
+        const refStorage = firebase.storage().ref(`imgsPosts/${uid}/${file.name}`);
+
+        const task = refStorage.put(file);
+        
+        return task;
+
+        /*task.on("state_changed", snapshot => {
+            
+            const porcentaje = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        },error => {
+            console.log(error);
+        },
+        () => {
+            task.snapshot.ref.getDownloadURL()
+                .then((url) => {
+                    console.log(url)
+                    //SE GUARDA RUTA DE LA IMAGEN PARA PODER USARLA
+                    localStorage.setItem("newImgBlog",url);
+                })
+        }) */
+    }
 }
 
 export default DatabaseController;

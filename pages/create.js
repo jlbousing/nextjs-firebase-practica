@@ -6,6 +6,8 @@ import { useAuth } from '../AuthUserProvider';
 import { useRouter } from 'next/router';
 import { validateAccess } from "../firebase/validateAccess";
 import Success from '../components/Success';
+import ImgProgressBar from '../components/ImgProgressBar';
+import { data } from 'autoprefixer';
 
 
 export default function create() {
@@ -19,6 +21,7 @@ export default function create() {
     const [descripcion,setDescripcion] = useState(null);
     const [videoUrl,setVideoUrl] = useState(null);
     const [imagen,setImagen] = useState(null);
+    const [progress, setProgress] = useState(0);
 
     const closeAlert = () => {
         setError(null);
@@ -47,6 +50,36 @@ export default function create() {
         setVideoUrl(null);
     }
 
+    const uploadImg = (event) => {
+
+        let file =  event.target.files[0];
+
+        let databaseController = new DatabaseController();
+        
+        let task = databaseController.subirImagenPost(file,authUser.uid);
+
+        task.on("state_changed", snapshot => {
+
+            const porcentaje = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+            setProgress(porcentaje);
+
+        },error => {
+
+            console.log(error);
+        },
+        () => {
+
+            task.snapshot.ref.getDownloadURL()
+                .then((url) => {
+                    console.log(url)
+                    //SE GUARDA RUTA DE LA IMAGEN PARA PODER USARLA
+                    localStorage.setItem("newImgBlog",url);
+                })
+
+        })
+        
+    }
+
     const onSubmit = (event) => {
 
         event.preventDefault();
@@ -59,6 +92,7 @@ export default function create() {
             if(authUser){
 
                 let databaseController = new DatabaseController();
+                setImagen(localStorage.getItem("newImgBlog"));
 
                 databaseController.createPost(
                     authUser.uid,authUser.displayName,authUser.email,titulo,descripcion,imagen,videoUrl
@@ -150,7 +184,9 @@ export default function create() {
                                     <label>Imagen:</label>
                                 </div>
                                 <input type="file" className="w-full border-solid border-2 border-blue-700 rounded-md mx-3"
-                                    onChange={(event) => setImagen(event.target.value)}></input>
+                                    onChange={(event) => uploadImg(event)}></input>
+                                
+                                <ImgProgressBar progress={progress} />
                             </div>
     
                             <div className="pt-8 w-full text-center text-2xl flex justify-items-start">

@@ -13,7 +13,9 @@ export default function PostList() {
       let aux = databaseController.consultarTodosPosts();
       
       let array = [];
-      aux.get()
+      aux
+      .orderBy("fecha", "desc")
+      .get()
         .then((result) => {
           setOnSnapShot(result.docs)
           console.log(onSnapshot)
