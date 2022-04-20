@@ -10,7 +10,7 @@ import ImgProgressBar from '../components/ImgProgressBar';
 import { data } from 'autoprefixer';
 
 
-export default function create() {
+export default function Create() {
 
     const { authUser } = useAuth();
     const router = useRouter();

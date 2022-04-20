@@ -4,7 +4,7 @@ import { useAuth } from "../AuthUserProvider"
 import { useRouter } from "next/router";
 
 
-export default function logout() {
+export default function Logout() {
 
     const { signOut } = useAuth();
     const router = useRouter();

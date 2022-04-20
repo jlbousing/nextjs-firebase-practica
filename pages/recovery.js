@@ -3,7 +3,7 @@ import { useAuth } from "../AuthUserProvider";
 import Alert from "../components/Alert";
 import Success from "../components/Success";
 
-export default function recovery() {
+export default function Recovery() {
 
   const [email, setEmail] = useState(null);
   const [error, setError] = useState(null);
