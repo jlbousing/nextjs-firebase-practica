@@ -21,9 +21,10 @@ if (!firebase.apps.length) {
 }
 
 if(typeof window != "undefined"){
+
   const messaging = firebase.messaging();
 
-  messaging.getToken({ vapidKey: 'AAAAEAqMWao:APA91bF_5AkZixKtEEEDihJ8OmI10ovD5V47A2lX8MDCjc9V9gSKGFMZ6vsIqytfLhKp9CI5oNE-ioFrgOQTjP20vBIuRSIrUWBjzzzRwu59CLHc8jQc1S1aUp7j6CpgWB-m-ML6OWgi' })
+  messaging.getToken({ vapidKey: 'BEvLWTRvb9W3oJm8CIk51ke4d4PqF1RdtaJBFwvG_At2sphvK0eLV99WFPufh301rBJSXJe6k75WWizgoOjaFKU' })
   .then((currentToken) => {
     if (currentToken) {
       console.log("se va a registrar un token en la base de datos");
@@ -31,16 +32,14 @@ if(typeof window != "undefined"){
         .doc(currentToken)
           .set({token: currentToken})
             .catch((error) => console.log("Error al registrar token en la base de datos",error));
-
     } else {
-      // Show permission request UI
       console.log('No registration token available. Request permission to generate one.');
-      // ...
     }
   }).catch((err) => {
-    console.log('An error occurred while retrieving token. ', err);
-    // ...
+    console.log('Ha ocurrido un error al recibir el token. ', err);
   });
+
+  
 }
 
 export default firebase;
