@@ -27,6 +27,7 @@ export default function Home() {
       <Head>
         <title></title>
         <meta name="description" content="Practica con firebase y Nextjs" />
+        <link rel="manifest" href="/manifest.json" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 

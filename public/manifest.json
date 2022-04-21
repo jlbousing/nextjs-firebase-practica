@@ -1,0 +1,10 @@
+{
+    "name": "BlogVideo Geek",
+    "short_name": "blog video geek",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#90cdf4",
+    "theme_color": "#90cdf4",
+    "orientation": "portrait-primary",
+    "gcm_sender_id": "68896446890"
+  }
