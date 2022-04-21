@@ -27,7 +27,7 @@ if(typeof window != "undefined"){
   messaging.getToken({ vapidKey: 'BEvLWTRvb9W3oJm8CIk51ke4d4PqF1RdtaJBFwvG_At2sphvK0eLV99WFPufh301rBJSXJe6k75WWizgoOjaFKU' })
   .then((currentToken) => {
     if (currentToken) {
-      console.log("se va a registrar un token en la base de datos");
+      console.log("se va a registrar un token en la base de datos ",currentToken);
       firebase.firestore().collection("tokens")
         .doc(currentToken)
           .set({token: currentToken})

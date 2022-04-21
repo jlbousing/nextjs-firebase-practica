@@ -1,5 +1,7 @@
 {
   "projects": {
-    "default": "blogeekplatzi-9d7b3"
-  }
+    "default": "blogeekplatzi-9d7b3",
+    "blogeek": "blogeekplatzi-9d7b3"
+  },
+  "targets": {}
 }
